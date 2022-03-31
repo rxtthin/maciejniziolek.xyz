@@ -27,7 +27,7 @@ function UpdateCanvasSize(): void {
 function InitParticles(): void {
 	particles = [];
 	const particleCount: number = canvas.width * canvas.height / 9000;
-	for(let i=0; i<particleCount; ++i) {
+	for(let i=0; i < particleCount; ++i) {
 		let radius: number = Math.random() * 5 + 1;
 		let x: number = Math.random() * ((canvas.width  - radius*2) - radius*2) + radius*2;
 		let y: number = Math.random() * ((canvas.height - radius*2) - radius*2) + radius*2;
@@ -59,7 +59,7 @@ function Frame(time: DOMHighResTimeStamp): void {
 	
 	if(!isNaN(dt)) {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		for(let i=0; i<particles.length; ++i) {
+		for(let i=0; i < particles.length; ++i) {
 			particles[i].update(dt, canvas, mouse);
 			particles[i].draw(ctx);
 		}	
