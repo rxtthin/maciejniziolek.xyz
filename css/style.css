@@ -1,0 +1,212 @@
+@import url('./hermit.css');
+:root{
+        overflow-x: hidden;
+        font-family: Hermit,sans-serif,monospace;
+        text-align: center;
+	font-size: 20px;
+        margin: 0;
+	padding: 0;
+        background-color: #282828;
+        color: #fff7fb;
+	scroll-behavior: smooth;
+	--glass-alpha: 0.85;
+}
+
+a{
+	text-decoration: none;
+	color: #83a598
+}
+a:hover{
+	color: #458588;
+}
+
+.button{
+	display: inline-block;
+	padding: 5px 20px;
+	background-color: gray;
+	border-radius: 20px;
+	cursor: pointer;
+	user-select: none;
+}
+
+.glass{
+        background-color: rgba(32, 32, 32, var(--glass-alpha)) !important;
+	backdrop-filter: blur(5px) !important;
+	-webkit-backdrop-filter: blur(5px) !important;
+}
+.glass-less-transparent{
+        background-color: rgba(32, 32, 32, calc(var(--glass-alpha) + 0.05)) !important;
+	backdrop-filter: blur(10px) !important;
+	-webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* Settings */
+#settings-button{
+	user-select: none;
+	position: fixed;
+	right: 10px;
+	top: 10px;
+	z-index: 200;
+}
+@keyframes spin{
+	0% { transform:rotate(0deg); }
+	100% { transform:rotate(-360deg); }
+}
+#settings-button-icon{
+	width: 64px;
+	animation: spin 4s infinite linear;
+	cursor: pointer;
+}
+#settings-panel{
+	width: 90%;
+	height: 75%;
+	max-width: 500px;
+	max-height: 800px;
+	box-shadow: 10px 10px 8px 10px rgba(0,0,0,0.1);
+	border-radius: 30px;
+	border: 2px solid gray;
+	z-index: 101;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	user-select: none;
+}
+#settings-panel h1{
+	text-shadow: 3px 3px #000000;
+}
+#settings-container input[type="checkbox"]{
+	margin-left: 20px;
+	vertical-align: middle;
+	width: 32px;
+	height: 32px;
+}
+#settings-background-cover{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vw;
+	background-color: black;
+	opacity: 0.5;
+	z-index: 100;
+}
+
+/* Grid */
+.grid-container{ 
+	display: grid;
+}
+.grid-image-container{ 
+	justify-content: center;
+	justify-items: center;
+	align-items: center;
+	align-content: center;
+	grid-gap: 20px;
+	grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+}
+.grid-image-container img{ 
+	width: 80px;
+}
+
+/* Media icon */
+.media-icon {
+	user-select: none;
+        margin: 0 auto;
+}
+.media-icon img{
+        width: 30px;
+        height: auto;
+        border-radius: 50%;
+}
+
+/* Section */
+section{
+        margin: 0 auto;
+	margin-top: 100px;
+	margin-bottom: 100px;
+	max-width: 600px;
+	width: 90vw;
+}
+.section-title{
+	text-shadow: 3px 3px #000000;
+	user-select: none;
+	color: royalblue;
+	font-size: 1.5em;
+	margin-bottom: 5px;
+}
+.section-content{
+        border-radius: 15px;
+        padding: 20px 40px;
+	border: 2px solid gray;
+	box-shadow: 10px 10px 8px 10px rgba(0,0,0,0.1);
+	overflow-x: auto;
+}
+.section-content-list{
+	list-style-type: none;
+	padding: 0;
+
+}
+.section-content-list li{
+	margin-bottom: 20px;
+}
+
+/* About section */
+#section-about-img-me{
+	border-radius: 50%;
+}
+
+/* Projects section */
+.section-projects-project:not(:last-of-type){
+	margin-bottom: 100px;
+}
+.section-projects-project-icon{
+	border: 3px solid black;
+	border-radius: 25%;
+	width: 128px;
+	height: 128px;
+}
+.section-projects-project-title{
+	font-size: 1.5em;
+}
+
+/* Background particles canvas */
+#background-canvas{
+	z-index: -100;
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+
+/* Hide the scrollbar */
+/* Safari */
+body::-webkit-scrollbar {
+	display: none;
+}
+body{
+	-ms-overflow-style: none; /* IE and edge */
+	scrollbar-width: none; /* Firefox */
+}
+
+@media only screen and (max-width: 450px) {
+	/* Grid */
+	.grid-image-container{
+		grid-gap: 10px 0px;
+		grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+	}
+	.grid-image-container img{ 
+		width: 60px;
+	}
+	.grid-wide-image-container img{
+		width: 90px;
+	}
+	.grid-wide-image-container{
+		grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+	}
+}
+/* Only for firefox */
+@-moz-document url-prefix() {
+	:root{
+		/* Firefox doesnt support backdrop-filter, transparency looks bad without it. */
+		--glass-alpha: 1.0;
+	}
+} 
