@@ -123,7 +123,6 @@ a:hover{
 
 /* Media icon */
 .media-icon {
-	user-select: none;
         margin: 0 auto;
 }
 .media-icon img{
