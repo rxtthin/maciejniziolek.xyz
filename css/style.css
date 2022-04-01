@@ -153,14 +153,6 @@ section{
 	box-shadow: 10px 10px 8px 10px rgba(0,0,0,0.1);
 	overflow-x: auto;
 }
-.section-content-list{
-	list-style-type: none;
-	padding: 0;
-
-}
-.section-content-list li{
-	margin-bottom: 20px;
-}
 
 /* About section */
 #section-about-img-me{
