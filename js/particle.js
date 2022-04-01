@@ -1,6 +1,5 @@
-import { particles, jointsEnabled } from './backgroundParticles.js';
 const moveSpeed = 100;
-const maxJointDistance = 50;
+export const maxJointDistance = 50;
 export class Particle {
     constructor(x, y, dir_x, dir_y, radius, color) {
         this.color = new Map([
@@ -16,23 +15,6 @@ export class Particle {
         this.color = color;
     }
     draw(ctx) {
-        if (jointsEnabled) {
-            particles.forEach((p) => {
-                if (p != this) {
-                    const dx = p.x - this.x;
-                    const dy = p.y - this.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy) - this.radius - p.radius;
-                    if (dist <= maxJointDistance) {
-                        ctx.beginPath();
-                        ctx.lineWidth = 0.3;
-                        ctx.moveTo(this.x, this.y);
-                        ctx.lineTo(p.x, p.y);
-                        ctx.strokeStyle = 'rgba(255,255,255,0.5)';
-                        ctx.stroke();
-                    }
-                }
-            });
-        }
         ctx.beginPath();
         ctx.fillStyle = `rgb(${this.color.get('red')}, ${this.color.get('green')}, ${this.color.get('blue')}`;
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);

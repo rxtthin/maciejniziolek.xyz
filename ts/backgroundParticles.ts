@@ -1,5 +1,5 @@
 import { Mouse } from './mouse.js';
-import { Particle } from './particle.js';
+import { Particle, maxJointDistance } from './particle.js';
 import { ColorSet } from './colorSet.js';
 
 const canvas: HTMLCanvasElement = document.getElementById('background-canvas') as HTMLCanvasElement;
@@ -63,9 +63,33 @@ function Frame(time: DOMHighResTimeStamp): void {
 	
 	if(!isNaN(dt)) {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+		/* Joints rendering */
+		if(jointsEnabled) {
+			particles.forEach((p1) => {
+				particles.forEach((p2) => {
+					if(p1 != p2) {
+						const dx: number = p1.x - p2.x;
+						const dy: number = p1.y - p2.y;
+						const dist: number = Math.sqrt(dx*dx + dy*dy) - p1.radius - p2.radius;
+
+						if(dist <= maxJointDistance) {
+							ctx.beginPath();
+							ctx.lineWidth = 0.2;
+							ctx.moveTo(p1.x, p1.y);
+							ctx.lineTo(p2.x, p2.y);
+							ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+							ctx.stroke();
+						}
+					}
+				});
+			});
+		}
+
 		particles.forEach((p) => {
 			p.update(dt, canvas);
 
+			/* Mouse interaction */
 			if(mouse.active) {
 				let dx: number = mouse.x - p.x;
 				let dy: number = mouse.y - p.y;
