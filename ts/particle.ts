@@ -32,7 +32,7 @@ export class Particle {
 				if(p != this) {
 					const dx: number = p.x - this.x;
 					const dy: number = p.y - this.y;
-					const dist: number = Math.sqrt(dx*dx + dy*dy);
+					const dist: number = Math.sqrt(dx*dx + dy*dy) - this.radius - p.radius;
 
 					if(dist <= maxJointDistance) {
 						ctx.beginPath();
