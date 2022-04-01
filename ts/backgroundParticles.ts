@@ -57,7 +57,7 @@ function Init(): void {
 
 function Frame(time: DOMHighResTimeStamp): void {
 	let dt: number = (time - previousTime) / 1000;
-	if(dt < 0.2) dt = 0.2; // Limit the dt to 0.2 seconds
+	if(dt > 0.2) dt = 0.2; // Limit the dt to 0.2 seconds
 
 	previousTime = time;
 	
