@@ -36,7 +36,6 @@ export class Particle {
 					const maxDist: number = 50;
 
 					if(dist <= maxDist) {
-						console.log(dist / maxDist);
 						ctx.beginPath();
 						ctx.lineWidth = 0.3;
 						ctx.moveTo(this.x, this.y);
