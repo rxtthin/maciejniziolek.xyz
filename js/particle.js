@@ -1,5 +1,6 @@
 import { particles, jointsEnabled } from './backgroundParticles.js';
 const moveSpeed = 100;
+const maxDist = 50;
 export class Particle {
     constructor(x, y, dir_x, dir_y, radius, color) {
         this.color = new Map([
@@ -21,9 +22,7 @@ export class Particle {
                     const dx = p.x - this.x;
                     const dy = p.y - this.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
-                    const maxDist = 50;
                     if (dist <= maxDist) {
-                        console.log(dist / maxDist);
                         ctx.beginPath();
                         ctx.lineWidth = 0.3;
                         ctx.moveTo(this.x, this.y);
