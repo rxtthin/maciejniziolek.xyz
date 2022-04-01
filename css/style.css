@@ -12,6 +12,10 @@
 	--glass-alpha: 0.85;
 }
 
+img{
+	user-select: none;
+}
+
 a{
 	text-decoration: none;
 	color: #83a598
