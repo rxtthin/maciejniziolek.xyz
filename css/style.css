@@ -81,6 +81,15 @@ a:hover{
 	width: 32px;
 	height: 32px;
 }
+#settings-container select{
+	margin-left: 20px;
+	width: 64px;
+	height: 32px;
+	vertical-align: middle;
+}
+#settings-container > div{
+	padding-bottom: 20px;
+}
 #settings-background-cover{
 	position: fixed;
 	top: 0;

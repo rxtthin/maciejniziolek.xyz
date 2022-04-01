@@ -1,27 +1,44 @@
-const moveSpeed = 20;
+import { particles, jointsEnabled } from './backgroundParticles.js';
+const moveSpeed = 10;
 export class Particle {
-    constructor(x, y, dir_x, dir_y, radius, red, green, blue) {
-        this.color = {
-            red: 0,
-            green: 0,
-            blue: 0,
-        };
+    constructor(x, y, dir_x, dir_y, radius, color) {
+        this.color = new Map([
+            ['red', 0],
+            ['green', 0],
+            ['blue', 0],
+        ]);
         this.x = x;
         this.y = y;
         this.dir_x = dir_x;
         this.dir_y = dir_y;
         this.radius = radius;
-        this.color.red = red;
-        this.color.green = green;
-        this.color.blue = blue;
+        this.color = color;
     }
     draw(ctx) {
+        if (jointsEnabled) {
+            particles.forEach((p) => {
+                if (p != this) {
+                    const dx = p.x - this.x;
+                    const dy = p.y - this.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const maxDist = 50;
+                    if (dist <= maxDist) {
+                        ctx.beginPath();
+                        ctx.lineWidth = 0.3;
+                        ctx.strokeStyle = `rgba(255,255,255,${(dist / maxDist)})`;
+                        ctx.moveTo(this.x, this.y);
+                        ctx.lineTo(p.x, p.y);
+                        ctx.stroke();
+                    }
+                }
+            });
+        }
         ctx.beginPath();
-        ctx.fillStyle = `rgb(${this.color.red}, ${this.color.green}, ${this.color.blue}`;
+        ctx.fillStyle = `rgb(${this.color.get('red')}, ${this.color.get('green')}, ${this.color.get('blue')}`;
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
         ctx.fill();
     }
-    update(dt, canvas, mouse) {
+    update(dt, canvas) {
         if (this.x + this.radius > canvas.width) {
             this.x = canvas.width - this.radius;
             this.dir_x *= -1;
@@ -37,18 +54,6 @@ export class Particle {
         else if (this.y < this.radius) {
             this.y = this.radius;
             this.dir_y *= -1;
-        }
-        if (mouse.active) {
-            let delta_x = mouse.x - this.x;
-            let delta_y = mouse.y - this.y;
-            let dist = Math.sqrt(delta_x * delta_x + delta_y * delta_y);
-            let maxDist = mouse.radius + this.radius;
-            if (dist <= maxDist) {
-                this.color.red = ((maxDist - dist) / maxDist * 255);
-            }
-            else {
-                this.color.red = 0;
-            }
         }
         this.x += this.dir_x * dt * moveSpeed;
         this.y += this.dir_y * dt * moveSpeed;

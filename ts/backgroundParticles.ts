@@ -1,12 +1,15 @@
 import { Mouse } from './mouse.js';
 import { Particle } from './particle.js';
+import { ColorSet } from './colorSet.js';
 
 const canvas: HTMLCanvasElement = document.getElementById('background-canvas') as HTMLCanvasElement;
 const ctx: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRenderingContext2D;
-let particles: Particle[] = [];
+export let particles: Particle[] = [];
+export let jointsEnabled: boolean = true;
 let mouse: Mouse = new Mouse(300);
 let frameCallbackID: number;
 let previousTime: number;
+let colorSet: ColorSet = new ColorSet('', '', '');
 
 window.addEventListener('mousemove', (ev): void => {
 	mouse.active = true;
@@ -26,7 +29,7 @@ function UpdateCanvasSize(): void {
 
 function InitParticles(): void {
 	particles = [];
-	const particleCount: number = canvas.width * canvas.height / 9000;
+	const particleCount: number = canvas.width * canvas.height / 5000;
 	for(let i=0; i < particleCount; ++i) {
 		let radius: number = Math.random() * 5 + 1;
 		let x: number = Math.random() * ((canvas.width  - radius*2) - radius*2) + radius*2;
@@ -34,11 +37,12 @@ function InitParticles(): void {
 		let dir_x: number = (Math.round(Math.random()) * 2 - 1) * ((Math.random() + 1.0) / 2);
 		let dir_y: number = (Math.round(Math.random()) * 2 - 1) * ((Math.random() + 1.0) / 2);
 
-		let red: number = 0;
-		let green: number = Math.random() * 55 + 150;
-		let blue: number = Math.random() * 55 + 50;
+		const color: Map<string, number> = new Map<string, number>();
+		color.set(colorSet.mainColor, Math.random() * 50 + 155);
+		color.set(colorSet.secondaryColor, Math.random() * 50 + 50);
+		color.set(colorSet.interactiveColor, 0);
 
-		particles.push(new Particle(x, y, dir_x, dir_y, radius, red, green, blue));
+		particles.push(new Particle(x, y, dir_x, dir_y, radius, color));
 	}
 }
 
@@ -59,10 +63,24 @@ function Frame(time: DOMHighResTimeStamp): void {
 	
 	if(!isNaN(dt)) {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		for(let i=0; i < particles.length; ++i) {
-			particles[i].update(dt, canvas, mouse);
-			particles[i].draw(ctx);
-		}	
+		particles.forEach((p) => {
+			p.update(dt, canvas);
+
+			if(mouse.active) {
+				let dx: number = mouse.x - p.x;
+				let dy: number = mouse.y - p.y;
+				let dist: number = Math.sqrt(dx*dx + dy*dy);
+				let maxDist: number = mouse.radius + p.radius;
+
+				if(dist <= maxDist) {
+					p.color.set(colorSet.interactiveColor, ((maxDist - dist) / maxDist * 255));
+				} else {
+					p.color.set(colorSet.interactiveColor, 0);
+				}
+			}
+
+			p.draw(ctx);
+		});
 	}
 
 	frameCallbackID = window.requestAnimationFrame(Frame); 
@@ -74,4 +92,31 @@ export function BackgroundParticlesSettingCallback(value: unknown): void {
 	} else {
 		canvas.style.visibility = 'hidden';
 	}
+}
+
+export function BackgroundParticlesJointsSettingCallback(value: unknown): void {
+	jointsEnabled = value as boolean;
+}
+
+export function BackgroundParticlesColorCallback(value: unknown): void {
+	colorSet.mainColor = value as string;
+
+	switch(value as string) {
+		case 'red':
+			colorSet.secondaryColor = 'green';
+			colorSet.interactiveColor = 'blue';
+			break;
+
+		case 'green':
+			colorSet.secondaryColor = 'blue';
+			colorSet.interactiveColor = 'red';
+			break;
+
+		case 'blue':
+			colorSet.secondaryColor = 'green';
+			colorSet.interactiveColor = 'red';
+			break;
+	}
+
+	Init();
 }

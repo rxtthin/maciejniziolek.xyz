@@ -1,11 +1,14 @@
 import { Mouse } from './mouse.js';
 import { Particle } from './particle.js';
+import { ColorSet } from './colorSet.js';
 const canvas = document.getElementById('background-canvas');
 const ctx = canvas.getContext('2d');
-let particles = [];
+export let particles = [];
+export let jointsEnabled = true;
 let mouse = new Mouse(300);
 let frameCallbackID;
 let previousTime;
+let colorSet = new ColorSet('', '', '');
 window.addEventListener('mousemove', (ev) => {
     mouse.active = true;
     mouse.x = ev.x;
@@ -21,17 +24,18 @@ function UpdateCanvasSize() {
 }
 function InitParticles() {
     particles = [];
-    const particleCount = canvas.width * canvas.height / 9000;
+    const particleCount = canvas.width * canvas.height / 5000;
     for (let i = 0; i < particleCount; ++i) {
         let radius = Math.random() * 5 + 1;
         let x = Math.random() * ((canvas.width - radius * 2) - radius * 2) + radius * 2;
         let y = Math.random() * ((canvas.height - radius * 2) - radius * 2) + radius * 2;
         let dir_x = (Math.round(Math.random()) * 2 - 1) * ((Math.random() + 1.0) / 2);
         let dir_y = (Math.round(Math.random()) * 2 - 1) * ((Math.random() + 1.0) / 2);
-        let red = 0;
-        let green = Math.random() * 55 + 150;
-        let blue = Math.random() * 55 + 50;
-        particles.push(new Particle(x, y, dir_x, dir_y, radius, red, green, blue));
+        const color = new Map();
+        color.set(colorSet.mainColor, Math.random() * 50 + 155);
+        color.set(colorSet.secondaryColor, Math.random() * 50 + 50);
+        color.set(colorSet.interactiveColor, 0);
+        particles.push(new Particle(x, y, dir_x, dir_y, radius, color));
     }
 }
 function Init() {
@@ -48,10 +52,22 @@ function Frame(time) {
     previousTime = time;
     if (!isNaN(dt)) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < particles.length; ++i) {
-            particles[i].update(dt, canvas, mouse);
-            particles[i].draw(ctx);
-        }
+        particles.forEach((p) => {
+            p.update(dt, canvas);
+            if (mouse.active) {
+                let dx = mouse.x - p.x;
+                let dy = mouse.y - p.y;
+                let dist = Math.sqrt(dx * dx + dy * dy);
+                let maxDist = mouse.radius + p.radius;
+                if (dist <= maxDist) {
+                    p.color.set(colorSet.interactiveColor, ((maxDist - dist) / maxDist * 255));
+                }
+                else {
+                    p.color.set(colorSet.interactiveColor, 0);
+                }
+            }
+            p.draw(ctx);
+        });
     }
     frameCallbackID = window.requestAnimationFrame(Frame);
 }
@@ -62,4 +78,25 @@ export function BackgroundParticlesSettingCallback(value) {
     else {
         canvas.style.visibility = 'hidden';
     }
+}
+export function BackgroundParticlesJointsSettingCallback(value) {
+    jointsEnabled = value;
+}
+export function BackgroundParticlesColorCallback(value) {
+    colorSet.mainColor = value;
+    switch (value) {
+        case 'red':
+            colorSet.secondaryColor = 'green';
+            colorSet.interactiveColor = 'blue';
+            break;
+        case 'green':
+            colorSet.secondaryColor = 'blue';
+            colorSet.interactiveColor = 'red';
+            break;
+        case 'blue':
+            colorSet.secondaryColor = 'green';
+            colorSet.interactiveColor = 'red';
+            break;
+    }
+    Init();
 }
