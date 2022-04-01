@@ -1,7 +1,7 @@
 import { particles, jointsEnabled } from './backgroundParticles.js'
 
 const moveSpeed: number = 100;
-const maxDist: number = 50;
+const maxJointDistance: number = 50;
 
 export class Particle {
 	public x: number;
@@ -34,7 +34,7 @@ export class Particle {
 					const dy: number = p.y - this.y;
 					const dist: number = Math.sqrt(dx*dx + dy*dy);
 
-					if(dist <= maxDist) {
+					if(dist <= maxJointDistance) {
 						ctx.beginPath();
 						ctx.lineWidth = 0.3;
 						ctx.moveTo(this.x, this.y);
