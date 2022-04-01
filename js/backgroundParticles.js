@@ -47,7 +47,7 @@ function Init() {
 }
 function Frame(time) {
     let dt = (time - previousTime) / 1000;
-    if (dt < 0.2)
+    if (dt > 0.2)
         dt = 0.2;
     previousTime = time;
     if (!isNaN(dt)) {

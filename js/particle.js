@@ -1,5 +1,5 @@
 import { particles, jointsEnabled } from './backgroundParticles.js';
-const moveSpeed = 10;
+const moveSpeed = 100;
 export class Particle {
     constructor(x, y, dir_x, dir_y, radius, color) {
         this.color = new Map([
@@ -23,11 +23,12 @@ export class Particle {
                     const dist = Math.sqrt(dx * dx + dy * dy);
                     const maxDist = 50;
                     if (dist <= maxDist) {
+                        console.log(dist / maxDist);
                         ctx.beginPath();
                         ctx.lineWidth = 0.3;
-                        ctx.strokeStyle = `rgba(255,255,255,${(dist / maxDist)})`;
                         ctx.moveTo(this.x, this.y);
                         ctx.lineTo(p.x, p.y);
+                        ctx.strokeStyle = 'rgba(255,255,255,0.5)';
                         ctx.stroke();
                     }
                 }
