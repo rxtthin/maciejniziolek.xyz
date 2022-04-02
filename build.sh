@@ -1,5 +1,6 @@
 #!/bin/sh
 
+echo 'Deleting old javascript output files...'
 rm js/*.js
 
 echo 'Compiling typescript modules...'
