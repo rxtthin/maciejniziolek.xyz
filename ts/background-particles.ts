@@ -122,7 +122,7 @@ export function BackgroundParticlesJointsSettingCallback(value: unknown): void {
 	jointsEnabled = value as boolean;
 }
 
-export function BackgroundParticlesColorCallback(value: unknown): void {
+export function BackgroundParticlesColorSettingCallback(value: unknown): void {
 	colorSet.mainColor = value as string;
 
 	switch(value as string) {
