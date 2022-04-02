@@ -36,6 +36,6 @@ function Init() {
     CloseSettingsPanel();
     AddSetting(new Setting('Background particles', 'checkbox', true, BackgroundParticlesSettingCallback));
     AddSetting(new Setting('Background particles joints', 'checkbox', true, BackgroundParticlesJointsSettingCallback));
-    AddSetting(new Setting('Background particles color', 'select', 'green', BackgroundParticlesColorCallback, ['green', 'blue', 'red']));
+    AddSetting(new Setting('Background particles color', 'select', 'red', BackgroundParticlesColorCallback, ['green', 'blue', 'red']));
 }
 Init();
