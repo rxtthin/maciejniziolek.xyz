@@ -1,5 +1,5 @@
 import { Setting } from './setting.js'
-import { BackgroundParticlesJointsSettingCallback, BackgroundParticlesSettingCallback, BackgroundParticlesColorCallback } from './background-particles.js'
+import { BackgroundParticlesJointsSettingCallback, BackgroundParticlesSettingCallback, BackgroundParticlesColorSettingCallback } from './background-particles.js'
 
 const settingsBackgroundCover: HTMLDivElement = document.getElementById('settings-background-cover') as HTMLDivElement;
 const settingsButton: HTMLButtonElement = document.getElementById('settings-button') as HTMLButtonElement;
@@ -44,7 +44,7 @@ function Init(): void {
 
 	AddSetting(new Setting('Background particles', 'checkbox', true, BackgroundParticlesSettingCallback));
 	AddSetting(new Setting('Background particles joints', 'checkbox', true, BackgroundParticlesJointsSettingCallback));
-	AddSetting(new Setting('Background particles color', 'select', 'red', BackgroundParticlesColorCallback, ['green', 'blue', 'red']));
+	AddSetting(new Setting('Background particles color', 'select', 'red', BackgroundParticlesColorSettingCallback, ['green', 'blue', 'red']));
 }
 
 Init();
