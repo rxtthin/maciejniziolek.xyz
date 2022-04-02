@@ -4,9 +4,9 @@ import { ColorSet } from './colorSet.js';
 
 const canvas: HTMLCanvasElement = document.getElementById('background-canvas') as HTMLCanvasElement;
 const ctx: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRenderingContext2D;
-export let particles: Particle[] = [];
-export let jointsEnabled: boolean = true;
-let mouse: Mouse = new Mouse(300);
+const mouse: Mouse = new Mouse(300);
+let particles: Particle[] = [];
+let jointsEnabled: boolean = true;
 let frameCallbackID: number;
 let previousTime: number;
 let colorSet: ColorSet = new ColorSet('', '', '');
