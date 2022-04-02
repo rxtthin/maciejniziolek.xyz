@@ -1,5 +1,5 @@
 import { Setting } from './setting.js'
-import { BackgroundParticlesJointsSettingCallback, BackgroundParticlesSettingCallback, BackgroundParticlesColorCallback } from './backgroundParticles.js'
+import { BackgroundParticlesJointsSettingCallback, BackgroundParticlesSettingCallback, BackgroundParticlesColorCallback } from './background-particles.js'
 
 const settingsBackgroundCover: HTMLDivElement = document.getElementById('settings-background-cover') as HTMLDivElement;
 const settingsButton: HTMLButtonElement = document.getElementById('settings-button') as HTMLButtonElement;

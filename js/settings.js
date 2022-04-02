@@ -1,5 +1,5 @@
 import { Setting } from './setting.js';
-import { BackgroundParticlesJointsSettingCallback, BackgroundParticlesSettingCallback, BackgroundParticlesColorCallback } from './backgroundParticles.js';
+import { BackgroundParticlesJointsSettingCallback, BackgroundParticlesSettingCallback, BackgroundParticlesColorCallback } from './background-particles.js';
 const settingsBackgroundCover = document.getElementById('settings-background-cover');
 const settingsButton = document.getElementById('settings-button');
 const settingsPanel = document.getElementById('settings-panel');
