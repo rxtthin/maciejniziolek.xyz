@@ -81,11 +81,11 @@ a:hover{
 #settings-panel h1{
 	text-shadow: 3px 3px #000000;
 }
-#settings-container input[type="checkbox"]{
+#settings-container input, #settings-container select{
 	margin-left: 20px;
-	vertical-align: middle;
 	width: 32px;
 	height: 32px;
+	vertical-align: middle;
 }
 #settings-container select{
 	margin-left: 20px;
@@ -212,10 +212,20 @@ body{
 	#settings-panel{
 		font-size: 15px;
 	}
+	#settings-container input, #settings-container select{
+		margin-left: 15px;
+		width: 24px;
+		height: 24px;
+	}
 }
-@media only screen and (max-width: 300px) {
+@media only screen and (max-width: 324px) {
 	#settings-panel{
 		font-size: 10px;
+	}
+	#settings-container input, #settings-container select{
+		margin-left: 10px;
+		width: 16px;
+		height: 16px;
 	}
 }
 /* Only for firefox */
