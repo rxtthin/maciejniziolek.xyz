@@ -62,6 +62,7 @@ a:hover{
 	cursor: pointer;
 }
 #settings-panel{
+	display: none;
 	width: 90%;
 	height: 75%;
 	max-width: 500px;
@@ -95,6 +96,7 @@ a:hover{
 	padding-bottom: 20px;
 }
 #settings-background-cover{
+	display: none;
 	position: fixed;
 	top: 0;
 	left: 0;
