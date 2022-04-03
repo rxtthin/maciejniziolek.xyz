@@ -1,4 +1,4 @@
-const settingsContainer: HTMLDivElement = document.getElementById('settings-container') as HTMLDivElement;
+import { settingsContainer } from './settings-manager.js';
 
 export type SettingCallback = (value: unknown) => void;
 

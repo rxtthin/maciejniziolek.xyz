@@ -177,7 +177,7 @@ section{
 }
 
 /* Background particles canvas */
-#background-canvas{
+canvas{
 	z-index: -100;
 	position: fixed;
 	top: 0;

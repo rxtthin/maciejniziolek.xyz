@@ -1,4 +1,4 @@
-const settingsContainer = document.getElementById('settings-container');
+import { settingsContainer } from './settings-manager.js';
 export class Setting {
     constructor(name, type, defaultValue, callback, data) {
         this.name = name;

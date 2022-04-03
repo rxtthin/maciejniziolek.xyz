@@ -2,7 +2,7 @@ import { Mouse } from './mouse.js';
 import { Particle, maxJointDistance } from './particle.js';
 import { ColorSet } from './color-set.js';
 
-const canvas: HTMLCanvasElement = document.getElementById('background-canvas') as HTMLCanvasElement;
+const canvas: HTMLCanvasElement = document.createElement('canvas');
 const ctx: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRenderingContext2D;
 const mouse: Mouse = new Mouse(300);
 let particles: Particle[] = [];
@@ -47,6 +47,8 @@ function InitParticles(): void {
 }
 
 function Init(): void {
+	document.body.appendChild(canvas);
+
 	canvas.style.visibility = 'visible';
 	UpdateCanvasSize();
 	InitParticles();
