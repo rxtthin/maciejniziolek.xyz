@@ -17,6 +17,10 @@ settingsRestoreDefaultsBtn.addEventListener('click', (): void => {
 	});
 });
 
+settingsBackgroundCover.addEventListener('click', (): void => {
+	CloseSettingsPanel();
+});
+
 settingsButton.addEventListener('click', (): void => {
 	if(settingsPanelVisible) {
 		CloseSettingsPanel();
