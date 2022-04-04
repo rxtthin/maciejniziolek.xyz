@@ -1,43 +1,41 @@
 const moveSpeed = 100;
 export const maxJointDistance = 50;
 export class Particle {
-    constructor(x, y, dir_x, dir_y, radius, color) {
+    constructor(position, direction, radius, color) {
         this.color = new Map([
             ['red', 0],
             ['green', 0],
             ['blue', 0],
         ]);
-        this.x = x;
-        this.y = y;
-        this.dir_x = dir_x;
-        this.dir_y = dir_y;
+        this.position = position;
+        this.direction = direction;
         this.radius = radius;
         this.color = color;
     }
     draw(ctx) {
         ctx.beginPath();
         ctx.fillStyle = `rgb(${this.color.get('red')}, ${this.color.get('green')}, ${this.color.get('blue')}`;
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2, false);
         ctx.fill();
     }
     update(dt, canvas) {
-        if (this.x + this.radius > canvas.width) {
-            this.x = canvas.width - this.radius;
-            this.dir_x *= -1;
+        if (this.position.x + this.radius > canvas.width) {
+            this.position.x = canvas.width - this.radius;
+            this.direction.x *= -1;
         }
-        else if (this.x < this.radius) {
-            this.x = this.radius;
-            this.dir_x *= -1;
+        else if (this.position.x < this.radius) {
+            this.position.x = this.radius;
+            this.direction.x *= -1;
         }
-        if (this.y + this.radius > canvas.height) {
-            this.y = canvas.height - this.radius;
-            this.dir_y *= -1;
+        if (this.position.y + this.radius > canvas.height) {
+            this.position.y = canvas.height - this.radius;
+            this.direction.y *= -1;
         }
-        else if (this.y < this.radius) {
-            this.y = this.radius;
-            this.dir_y *= -1;
+        else if (this.position.y < this.radius) {
+            this.position.y = this.radius;
+            this.direction.y *= -1;
         }
-        this.x += this.dir_x * dt * moveSpeed;
-        this.y += this.dir_y * dt * moveSpeed;
+        this.position.x += this.direction.x * dt * moveSpeed;
+        this.position.y += this.direction.y * dt * moveSpeed;
     }
 }

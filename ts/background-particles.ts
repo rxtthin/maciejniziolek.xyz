@@ -1,3 +1,4 @@
+import { Vector2 } from './vector2.js';
 import { Mouse } from './mouse.js';
 import { Particle, maxJointDistance } from './particle.js';
 import { ColorSet, colorSets } from './color-set.js';
@@ -15,6 +16,10 @@ window.addEventListener('mousemove', (ev): void => {
 	mouse.active = true;
 	mouse.x = ev.x;
 	mouse.y = ev.y;
+});
+
+window.addEventListener('mouseout', (): void => {
+	mouse.active = false;
 });
 
 window.addEventListener('resize', (): void => {
@@ -42,7 +47,7 @@ function InitParticles(): void {
 		color.set(colorSet.secondaryColor, Math.random() * 50 + 50);
 		color.set(colorSet.interactiveColor, 0);
 
-		particles.push(new Particle(x, y, dir_x, dir_y, radius, color));
+		particles.push(new Particle(new Vector2(x, y), new Vector2(dir_x, dir_y), radius, color));
 	}
 }
 
@@ -71,15 +76,15 @@ function Frame(time: DOMHighResTimeStamp): void {
 			particles.forEach((p1) => {
 				particles.forEach((p2) => {
 					if(p1 != p2) {
-						const dx: number = p1.x - p2.x;
-						const dy: number = p1.y - p2.y;
+						const dx: number = p1.position.x- p2.position.x;
+						const dy: number = p1.position.y - p2.position.y;
 						const dist: number = Math.sqrt(dx*dx + dy*dy) - p1.radius - p2.radius;
 
 						if(dist <= maxJointDistance) {
 							ctx.beginPath();
 							ctx.lineWidth = 0.5;
-							ctx.moveTo(p1.x, p1.y);
-							ctx.lineTo(p2.x, p2.y);
+							ctx.moveTo(p1.position.x, p1.position.y);
+							ctx.lineTo(p2.position.x, p2.position.y);
 							ctx.strokeStyle = `rgba(255,255,255,${(1 - (dist / maxJointDistance)) * 100}%)`;
 							ctx.stroke();
 						}
@@ -93,8 +98,8 @@ function Frame(time: DOMHighResTimeStamp): void {
 
 			/* Mouse interaction */
 			if(mouse.active) {
-				let dx: number = mouse.x - p.x;
-				let dy: number = mouse.y - p.y;
+				let dx: number = mouse.x - p.position.x;
+				let dy: number = mouse.y - p.position.y;
 				let dist: number = Math.sqrt(dx*dx + dy*dy);
 				let maxDist: number = mouse.radius + p.radius;
 

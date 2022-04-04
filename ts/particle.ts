@@ -1,11 +1,11 @@
+import { Vector2 } from './vector2.js';
+
 const moveSpeed: number = 100;
 export const maxJointDistance: number = 50;
 
 export class Particle {
-	public x: number;
-	public y: number;
-	public dir_x: number;
-	public dir_y: number;
+	public position: Vector2;
+	public direction: Vector2;
 	public radius: number;
 
 	// TODO: This solution might not be the best.
@@ -15,44 +15,43 @@ export class Particle {
 		['blue', 0],
 	]);
 
-	public constructor(x: number, y: number, dir_x: number, dir_y: number, radius: number, color: Map<string, number>) {
-		this.x = x;
-		this.y = y;
-		this.dir_x = dir_x;
-		this.dir_y = dir_y; this.radius = radius;
+	public constructor(position: Vector2, direction: Vector2, radius: number, color: Map<string, number>) {
+		this.position = position;
+		this.direction = direction;
+		this.radius = radius;
 		this.color = color;
 	}
 
 	public draw(ctx: CanvasRenderingContext2D): void {
 		ctx.beginPath();
 		ctx.fillStyle = `rgb(${this.color.get('red')}, ${this.color.get('green')}, ${this.color.get('blue')}`;
-		ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+		ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2, false);
 		ctx.fill();
 	}
 
 	public update(dt: number, canvas: HTMLCanvasElement): void {
 		/* Right wall */
-		if(this.x + this.radius > canvas.width) {
-			this.x = canvas.width - this.radius;
-			this.dir_x *= -1; 
+		if(this.position.x + this.radius > canvas.width) {
+			this.position.x = canvas.width - this.radius;
+			this.direction.x *= -1; 
 		} 
 		/* Left wall */
-		else if(this.x < this.radius) {
-			this.x = this.radius;
-			this.dir_x *= -1; 
+		else if(this.position.x < this.radius) {
+			this.position.x = this.radius;
+			this.direction.x *= -1; 
 		}
 		/* Top wall */
-		if(this.y + this.radius > canvas.height) {
-			this.y = canvas.height - this.radius;
-			this.dir_y *= -1;
+		if(this.position.y + this.radius > canvas.height) {
+			this.position.y = canvas.height - this.radius;
+			this.direction.y *= -1;
 		}
 		/* Bottom wall */
-		else if(this.y < this.radius) {
-			this.y = this.radius;
-			this.dir_y *= -1;
+		else if(this.position.y < this.radius) {
+			this.position.y = this.radius;
+			this.direction.y *= -1;
 		}
 
-		this.x += this.dir_x * dt * moveSpeed;
-		this.y += this.dir_y * dt * moveSpeed;
+		this.position.x += this.direction.x * dt * moveSpeed;
+		this.position.y += this.direction.y * dt * moveSpeed;
 	}
 }
