@@ -77,10 +77,10 @@ function Frame(time: DOMHighResTimeStamp): void {
 
 						if(dist <= maxJointDistance) {
 							ctx.beginPath();
-							ctx.lineWidth = 0.2;
+							ctx.lineWidth = 0.5;
 							ctx.moveTo(p1.x, p1.y);
 							ctx.lineTo(p2.x, p2.y);
-							ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+							ctx.strokeStyle = `rgba(255,255,255,${(1 - (dist / maxJointDistance)) * 100}%)`;
 							ctx.stroke();
 						}
 					}

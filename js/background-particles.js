@@ -62,10 +62,10 @@ function Frame(time) {
                         const dist = Math.sqrt(dx * dx + dy * dy) - p1.radius - p2.radius;
                         if (dist <= maxJointDistance) {
                             ctx.beginPath();
-                            ctx.lineWidth = 0.2;
+                            ctx.lineWidth = 0.5;
                             ctx.moveTo(p1.x, p1.y);
                             ctx.lineTo(p2.x, p2.y);
-                            ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+                            ctx.strokeStyle = `rgba(255,255,255,${(1 - (dist / maxJointDistance)) * 100}%)`;
                             ctx.stroke();
                         }
                     }
