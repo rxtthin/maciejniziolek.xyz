@@ -50,7 +50,7 @@ function Init(): void {
 
 	AddSetting(new Setting('Background particles', 'checkbox', true, BackgroundParticlesSettingCallback));
 	AddSetting(new Setting('Background particles joints', 'checkbox', true, BackgroundParticlesJointsSettingCallback));
-	AddSetting(new Setting('Background particles color', 'select', 'red', BackgroundParticlesColorSettingCallback, ['green', 'blue', 'red']));
+	AddSetting(new Setting('Background particles color', 'select', 'red', BackgroundParticlesColorSettingCallback, ['red', 'green', 'blue']));
 }
 
 Init();

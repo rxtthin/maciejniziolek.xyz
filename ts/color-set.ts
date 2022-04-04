@@ -9,3 +9,9 @@ export class ColorSet {
 		this.interactiveColor = interactiveColor;
 	}
 }
+
+export const colorSets: Map<string, ColorSet> = new Map<string, ColorSet>([
+	['red', new ColorSet('red', 'green', 'blue')],
+	['green', new ColorSet('green', 'blue', 'red')],
+	['blue', new ColorSet('blue', 'green', 'red')],
+]);

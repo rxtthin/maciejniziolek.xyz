@@ -1,6 +1,6 @@
 import { Mouse } from './mouse.js';
 import { Particle, maxJointDistance } from './particle.js';
-import { ColorSet } from './color-set.js';
+import { ColorSet, colorSets } from './color-set.js';
 
 const canvas: HTMLCanvasElement = document.createElement('canvas');
 const ctx: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRenderingContext2D;
@@ -125,24 +125,6 @@ export function BackgroundParticlesJointsSettingCallback(value: unknown): void {
 }
 
 export function BackgroundParticlesColorSettingCallback(value: unknown): void {
-	colorSet.mainColor = value as string;
-
-	switch(value as string) {
-		case 'red':
-			colorSet.secondaryColor = 'green';
-			colorSet.interactiveColor = 'blue';
-			break;
-
-		case 'green':
-			colorSet.secondaryColor = 'blue';
-			colorSet.interactiveColor = 'red';
-			break;
-
-		case 'blue':
-			colorSet.secondaryColor = 'green';
-			colorSet.interactiveColor = 'red';
-			break;
-	}
-
+	colorSet = colorSets.get(value as string) as ColorSet;
 	Init();
 }
