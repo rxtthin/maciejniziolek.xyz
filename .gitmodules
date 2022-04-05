@@ -1,0 +1,3 @@
+[submodule "switchracer"]
+	path = switchracer
+	url = https://github.com/rxtthin/switchracer
