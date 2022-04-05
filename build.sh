@@ -11,3 +11,16 @@ if [ $? -ne 0 ] ; then
 else
 	echo 'Typescript modules compiled successfully.'
 fi
+
+echo 'Updating switchracer...'
+if [ -d 'switchracer' ]
+then
+	cd switchracer
+	git pull
+	rm -rf ts
+	cd ..
+else
+	git clone https://github.com/rxtthin/switchracer
+	rm -rf switchracer/ts
+	cd ..
+fi
