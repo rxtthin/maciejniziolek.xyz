@@ -31,10 +31,12 @@ function InitParticles() {
     const particleCount = canvas.width * canvas.height / 5000;
     for (let i = 0; i < particleCount; ++i) {
         let radius = Math.random() * 5 + 1;
-        let x = Math.random() * ((canvas.width - radius * 2) - radius * 2) + radius * 2;
-        let y = Math.random() * ((canvas.height - radius * 2) - radius * 2) + radius * 2;
-        let dir_x = (Math.round(Math.random()) * 2 - 1) * ((Math.random() + 1.0) / 2);
-        let dir_y = (Math.round(Math.random()) * 2 - 1) * ((Math.random() + 1.0) / 2);
+        let _RandPos = (max) => Math.random() * ((max - radius * 2) - radius * 2) + radius * 2;
+        let x = _RandPos(canvas.width);
+        let y = _RandPos(canvas.height);
+        let _RandDir = () => (Math.round(Math.random()) * 2 - 1) * ((Math.random() + 1.0) / 2);
+        let dir_x = _RandDir();
+        let dir_y = _RandDir();
         const color = new Map();
         color.set(colorSet.mainColor, Math.random() * 50 + 155);
         color.set(colorSet.secondaryColor, Math.random() * 50 + 50);
@@ -50,6 +52,36 @@ function Init() {
     window.cancelAnimationFrame(frameCallbackID);
     frameCallbackID = window.requestAnimationFrame(Frame);
 }
+function DrawJoint(p1, p2) {
+    const dx = p1.position.x - p2.position.x;
+    const dy = p1.position.y - p2.position.y;
+    const dist = Math.sqrt(dx * dx + dy * dy) - p1.radius - p2.radius;
+    if (dist <= maxJointDistance) {
+        ctx.beginPath();
+        ctx.lineWidth = 0.5;
+        ctx.moveTo(p1.position.x, p1.position.y);
+        ctx.lineTo(p2.position.x, p2.position.y);
+        ctx.strokeStyle = `rgba(255,255,255,${(1 - (dist / maxJointDistance)) * 100}%)`;
+        ctx.stroke();
+    }
+}
+function HandleMouseInteraction(p) {
+    if (mouse.active) {
+        let dx = mouse.x - p.position.x;
+        let dy = mouse.y - p.position.y;
+        let dist = Math.sqrt(dx * dx + dy * dy);
+        let maxDist = mouse.radius + p.radius;
+        if (dist <= maxDist) {
+            p.color.set(colorSet.interactiveColor, ((maxDist - dist) / maxDist * 255));
+        }
+        else {
+            p.color.set(colorSet.interactiveColor, 0);
+        }
+    }
+    else {
+        p.color.set(colorSet.interactiveColor, 0);
+    }
+}
 function Frame(time) {
     let dt = (time - previousTime) / 1000;
     if (dt > 0.2)
@@ -61,35 +93,14 @@ function Frame(time) {
             particles.forEach((p1) => {
                 particles.forEach((p2) => {
                     if (p1 != p2) {
-                        const dx = p1.position.x - p2.position.x;
-                        const dy = p1.position.y - p2.position.y;
-                        const dist = Math.sqrt(dx * dx + dy * dy) - p1.radius - p2.radius;
-                        if (dist <= maxJointDistance) {
-                            ctx.beginPath();
-                            ctx.lineWidth = 0.5;
-                            ctx.moveTo(p1.position.x, p1.position.y);
-                            ctx.lineTo(p2.position.x, p2.position.y);
-                            ctx.strokeStyle = `rgba(255,255,255,${(1 - (dist / maxJointDistance)) * 100}%)`;
-                            ctx.stroke();
-                        }
+                        DrawJoint(p1, p2);
                     }
                 });
             });
         }
         particles.forEach((p) => {
             p.update(dt, canvas);
-            if (mouse.active) {
-                let dx = mouse.x - p.position.x;
-                let dy = mouse.y - p.position.y;
-                let dist = Math.sqrt(dx * dx + dy * dy);
-                let maxDist = mouse.radius + p.radius;
-                if (dist <= maxDist) {
-                    p.color.set(colorSet.interactiveColor, ((maxDist - dist) / maxDist * 255));
-                }
-                else {
-                    p.color.set(colorSet.interactiveColor, 0);
-                }
-            }
+            HandleMouseInteraction(p);
             p.draw(ctx);
         });
     }
