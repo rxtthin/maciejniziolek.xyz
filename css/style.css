@@ -25,12 +25,16 @@ a:hover{
 }
 
 .button{
+	color: white;
 	display: inline-block;
 	padding: 5px 20px;
 	background-color: gray;
 	border-radius: 20px;
 	cursor: pointer;
 	user-select: none;
+}
+.button:hover{
+	color: royalblue;
 }
 
 .glass{
