@@ -12,6 +12,7 @@ else
 	echo 'Typescript modules compiled successfully.'
 fi
 
+echo 'Updating switchracer...'
 if [ -d 'switchracer' ]
 then
 	cd switchracer
@@ -20,7 +21,5 @@ then
 	cd ..
 else
 	git clone https://github.com/rxtthin/switchracer
-	cd switchracer
-	rm -rf ts
-	cd ..
+	rm -rf switchracer/ts
 fi
