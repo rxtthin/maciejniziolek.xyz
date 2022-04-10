@@ -186,6 +186,10 @@ canvas{
 	left: 0;
 }
 
+#github-activity-chart{
+	width: 95%;
+}
+
 /* Hide the scrollbar */
 /* Safari */
 body::-webkit-scrollbar {
