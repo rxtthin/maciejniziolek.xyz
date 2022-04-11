@@ -34,7 +34,7 @@ function UpdateCanvasSize(): void {
 
 function InitParticles(): void {
 	particles = [];
-	const particleCount: number = canvas.width * canvas.height / 5000;
+	const particleCount: number = Math.min(canvas.width * canvas.height / 5000, 500);
 	for(let i=0; i < particleCount; ++i) {
 		let radius: number = Math.random() * 5 + 1;
 
