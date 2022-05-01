@@ -71,12 +71,7 @@ function HandleMouseInteraction(p) {
         let dy = mouse.y - p.position.y;
         let dist = Math.sqrt(dx * dx + dy * dy);
         let maxDist = mouse.radius + p.radius;
-        if (dist <= maxDist) {
-            p.color.set(colorSet.interactiveColor, ((maxDist - dist) / maxDist * 255));
-        }
-        else {
-            p.color.set(colorSet.interactiveColor, 0);
-        }
+        p.color.set(colorSet.interactiveColor, dist <= maxDist ? ((maxDist - dist) / maxDist * 255) : 0);
     }
     else {
         p.color.set(colorSet.interactiveColor, 0);
@@ -107,12 +102,7 @@ function Frame(time) {
     frameCallbackID = window.requestAnimationFrame(Frame);
 }
 export function BackgroundParticlesSettingCallback(value) {
-    if (value) {
-        Init();
-    }
-    else {
-        canvas.style.visibility = 'hidden';
-    }
+    value ? Init() : canvas.style.visibility = 'hidden';
 }
 export function BackgroundParticlesJointsSettingCallback(value) {
     jointsEnabled = value;

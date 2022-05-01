@@ -89,11 +89,7 @@ function HandleMouseInteraction(p: Particle): void {
 		let dist: number = Math.sqrt(dx*dx + dy*dy);
 		let maxDist: number = mouse.radius + p.radius;
 
-		if(dist <= maxDist) {
-			p.color.set(colorSet.interactiveColor, ((maxDist - dist) / maxDist * 255));
-		} else {
-			p.color.set(colorSet.interactiveColor, 0);
-		}
+		p.color.set(colorSet.interactiveColor, dist <= maxDist ? ((maxDist - dist) / maxDist * 255) : 0);
 	} else {
 		p.color.set(colorSet.interactiveColor, 0);
 	}
@@ -102,7 +98,6 @@ function HandleMouseInteraction(p: Particle): void {
 function Frame(time: DOMHighResTimeStamp): void {
 	let dt: number = (time - previousTime) / 1000;
 	if(dt > 0.2) dt = 0.2;
-
 	previousTime = time;
 	
 	if(!isNaN(dt)) {
@@ -130,19 +125,15 @@ function Frame(time: DOMHighResTimeStamp): void {
 	frameCallbackID = window.requestAnimationFrame(Frame); 
 }
 
-export function BackgroundParticlesSettingCallback(value: unknown): void {
-	if(value as boolean) {
-		Init();
-	} else {
-		canvas.style.visibility = 'hidden';
-	}
+export function BackgroundParticlesSettingCallback(value: boolean): void {
+	value ? Init() : canvas.style.visibility = 'hidden';
 }
 
-export function BackgroundParticlesJointsSettingCallback(value: unknown): void {
+export function BackgroundParticlesJointsSettingCallback(value: boolean): void {
 	jointsEnabled = value as boolean;
 }
 
-export function BackgroundParticlesColorSettingCallback(value: unknown): void {
-	colorSet = colorSets.get(value as string) as ColorSet;
+export function BackgroundParticlesColorSettingCallback(value: string): void {
+	colorSet = colorSets.get(value) as ColorSet;
 	Init();
 }

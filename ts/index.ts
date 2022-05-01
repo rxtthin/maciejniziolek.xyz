@@ -1,2 +1,2 @@
 import './background-particles.js';
-import './settings-manager.js';
+import './settings/settings-manager.js';

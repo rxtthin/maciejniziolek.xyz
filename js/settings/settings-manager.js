@@ -1,5 +1,6 @@
-import { Setting } from './setting.js';
-import { BackgroundParticlesJointsSettingCallback, BackgroundParticlesSettingCallback, BackgroundParticlesColorSettingCallback } from './background-particles.js';
+import { CheckboxSetting } from './checkbox-setting.js';
+import { SelectSetting } from './select-setting.js';
+import { BackgroundParticlesJointsSettingCallback, BackgroundParticlesSettingCallback, BackgroundParticlesColorSettingCallback } from '../background-particles.js';
 export const settingsContainer = document.getElementById('settings-container');
 ;
 const settingsBackgroundCover = document.getElementById('settings-background-cover');
@@ -10,19 +11,14 @@ let settingsPanelVisible = false;
 let settings = [];
 settingsRestoreDefaultsBtn.addEventListener('click', () => {
     settings.forEach((setting) => {
-        setting.Restart();
+        setting.Restart && setting.Restart();
     });
 });
 settingsBackgroundCover.addEventListener('click', () => {
     CloseSettingsPanel();
 });
 settingsButton.addEventListener('click', () => {
-    if (settingsPanelVisible) {
-        CloseSettingsPanel();
-    }
-    else {
-        OpenSettingsPanel();
-    }
+    settingsPanelVisible ? CloseSettingsPanel() : OpenSettingsPanel();
 });
 function OpenSettingsPanel() {
     settingsBackgroundCover.style.display = 'block';
@@ -39,8 +35,8 @@ function AddSetting(setting) {
 }
 function Init() {
     CloseSettingsPanel();
-    AddSetting(new Setting('Background particles enabled', 'checkbox', true, BackgroundParticlesSettingCallback));
-    AddSetting(new Setting('Background particles joints', 'checkbox', true, BackgroundParticlesJointsSettingCallback));
-    AddSetting(new Setting('Background particles color', 'select', 'red', BackgroundParticlesColorSettingCallback, ['red', 'green', 'blue']));
+    AddSetting(new CheckboxSetting('Background particles', true, BackgroundParticlesSettingCallback));
+    AddSetting(new CheckboxSetting('Background particles joints', true, BackgroundParticlesJointsSettingCallback));
+    AddSetting(new SelectSetting('Background particles color', ['red', 'green', 'blue'], BackgroundParticlesColorSettingCallback));
 }
 Init();
