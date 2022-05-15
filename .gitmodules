@@ -1,3 +1,6 @@
 [submodule "switchracer"]
 	path = switchracer
 	url = https://github.com/rxtthin/switchracer
+[submodule "canvastein"]
+	path = canvastein
+	url = https://github.com/rxtthin/canvastein

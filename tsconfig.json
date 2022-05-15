@@ -96,5 +96,5 @@
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
 
-  "exclude": ["./switchracer/"]
+  "exclude": ["./switchracer/", "./canvastein"]
 }
