@@ -32,9 +32,12 @@ a:hover{
 	border-radius: 20px;
 	cursor: pointer;
 	user-select: none;
+	transition: padding 0.1s linear;
 }
 .button:hover{
-	color: royalblue;
+	color: #282828;
+	background-color: white;
+	padding: 8px 25px;
 }
 
 .glass{
