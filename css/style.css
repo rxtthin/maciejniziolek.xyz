@@ -12,6 +12,27 @@
 	--glass-alpha: 0.85;
 }
 
+#main-nav{
+	left: 0;
+	top: 0;
+	position: fixed;
+	z-index: 100;
+	width: 100vw;
+	background-color: rgba(10, 10, 10, 0.9);
+}
+#main-nav ul{
+	margin: 0px;
+	padding: 0px;
+	position: relative;
+	display: flex;
+	height: 48px;
+	flex-direction: row;
+	list-style-type: none;
+	align-items: center;
+	justify-content: center;
+	gap: 20px;
+}
+
 img{
 	user-select: none;
 }
@@ -53,20 +74,21 @@ a:hover{
 
 /* Settings */
 #settings-button{
+	position: absolute;
+	right: 0;
+	top: 0;
+	align-self: flex-end;
 	user-select: none;
-	position: fixed;
-	right: 10px;
-	top: 10px;
 	z-index: 200;
+}
+#settings-button-icon{
+	height: 48px;
+	animation: spin 4s infinite linear;
+	cursor: pointer;
 }
 @keyframes spin{
 	0% { transform:rotate(0deg); }
 	100% { transform:rotate(-360deg); }
-}
-#settings-button-icon{
-	width: 64px;
-	animation: spin 4s infinite linear;
-	cursor: pointer;
 }
 #settings-panel{
 	font-size: 20px;
