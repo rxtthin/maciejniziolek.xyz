@@ -34,7 +34,7 @@ function UpdateCanvasSize(): void {
 
 function InitParticles(): void {
 	particles = [];
-	const particleCount: number = Math.min(canvas.width * canvas.height / 5000, 500);
+	const particleCount: number = Math.min(canvas.width * canvas.height / 9000, 100);
 	for(let i=0; i < particleCount; ++i) {
 		let radius: number = Math.random() * 5 + 1;
 
@@ -115,9 +115,7 @@ function Frame(time: DOMHighResTimeStamp): void {
 
 		particles.forEach((p) => {
 			p.update(dt, canvas);
-
 			HandleMouseInteraction(p);
-
 			p.draw(ctx);
 		});
 	}

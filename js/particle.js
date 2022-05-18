@@ -17,6 +17,7 @@ export class Particle {
         ctx.fillStyle = `rgb(${this.color.get('red')}, ${this.color.get('green')}, ${this.color.get('blue')}`;
         ctx.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2, false);
         ctx.fill();
+        ctx.closePath();
     }
     update(dt, canvas) {
         if (this.position.x + this.radius > canvas.width) {
