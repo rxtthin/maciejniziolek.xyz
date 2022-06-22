@@ -192,6 +192,16 @@ section:not(:first-of-type), section:not(:last-of-type) {
 	border-radius: 50%;
 }
 
+.section-technologies-subsection{
+	margin-bottom: 75px;
+}
+.section-technologies-subsection div{
+        border-radius: 8px;
+        padding: 20px 40px;
+	border: 2px solid gray;
+	box-shadow: 10px 10px 8px 10px rgba(0,0,0,0.1);
+}
+
 /* Projects section */
 .section-projects-project:not(:last-of-type){
 	margin-bottom: 100px;
